@@ -1,0 +1,115 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Card
+{
+  char rank;
+  char suit;
+  struct Card *next;
+};
+
+void
+displayCards (struct Card *cardPtr)
+{
+  while (cardPtr != NULL)
+    {
+      printf ("%c%c ", (*cardPtr).rank, cardPtr->suit);
+      cardPtr = cardPtr->next;
+    }
+}
+/*
+{
+    struct Card* node = NULL;
+    node = (struct Card*)malloc(sizeof(struct Card));
+    node->rank = rank;
+    node->suit = suit;
+    
+    while(ptr->next != NULL){
+        ptr = ptr->next;
+    }
+   
+    ptr->next = node;
+}
+*/
+void append(struct Card* ptr, char rank, char suit){
+    struct Card* node = NULL;
+    node = (struct Card*)malloc(sizeof(struct Card));
+    node->rank = rank;
+    node->suit = suit;
+    
+    while(ptr->next != NULL){
+        ptr = ptr->next;
+    }
+   
+    ptr->next = node;
+}
+
+void delete(struct Card* ptr, char rank, char suit){
+    struct Card* prev = NULL;
+    prev = ptr;
+    ptr = ptr->next;
+    
+    while(ptr->next != NULL){
+        if(ptr->rank == rank && ptr->suit == suit){
+            prev->next = ptr->next;
+            return;
+        }
+        ptr = ptr->next;
+        prev = prev->next;
+    }
+}
+
+int
+main ()
+{
+  //printf("Hello World");
+  
+  struct Card* first = NULL;
+  struct Card* node = NULL;
+  struct Card* ptr = NULL;
+  char rank;
+  char suit;
+  
+  first = (struct Card*)malloc(sizeof(struct Card));
+  first->rank = 'A';
+  first->suit = 'S';
+  
+  ptr = first;
+  
+  node = (struct Card*)malloc(sizeof(struct Card));
+  node->rank = 'A';
+  node->suit = '1';
+  first->next = node;
+  
+  node = (struct Card*)malloc(sizeof(struct Card));
+  node->rank = 'A';
+  node->suit = '2';
+  ptr = ptr->next;
+  ptr->next = node;
+  
+  scanf("%c%c", &rank,&suit);
+  
+  append(first,rank,suit);
+  displayCards (first);
+  delete(first,'A','2');
+  printf("\n");
+  displayCards (first);
+  
+  /*
+  int *a ;
+  a = (int*)calloc(10000000,  sizeof(int));
+  for(int i = 0; i < 10000000; i++){
+      printf("%d", a[i]);
+
+  }*/
+ 
+  return 0;
+}
